@@ -11,4 +11,5 @@ weapons = {
 def selectWeapon():
     weapon = random.choice(list(weapons.keys()))
     points = weapons.get(weapon)
-    return [weapon, points]
+    return {"weapon": weapon,
+            "weaponPoints": points}

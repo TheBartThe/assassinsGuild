@@ -8,8 +8,15 @@ import requests
 def home():
     return render_template('home.html', title = 'Home')
 
-@app.route('/mission', methods=["GET", "POST"])
+@app.route('/mission', methods=["GET"])
 def mission():
     form = MissionForm()
-    targetService = "http://127.0.0.1:5002/"
-    return render_template('mission.html', title = 'Mission', form = form)
+    missionService = "http://127.0.0.1:5001/"
+    if request.method == 'GET':
+        response = requests.get(missionService).json()
+        return render_template('mission.html', title = 'Mission', form = form, data = response)
+#    if request.method == 'POST':
+#        response = requests.get(missionService).json()
+#        return render_template('mission.html', title = 'Mission', form = form, data = response)
+#    elif request.method == 'GET':
+#        return render_template('missionRequest.html', title = 'Mission', form = form)

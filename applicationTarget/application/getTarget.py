@@ -11,4 +11,5 @@ targets = {
 def selectTarget():
     target = random.choice(list(targets.keys()))
     points = targets.get(target)
-    return [target, points]
+    return {"target": target,
+            "targetPoints": points}
