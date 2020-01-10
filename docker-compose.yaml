@@ -19,7 +19,7 @@ services:
   frontend:
     image: frontend
     container_name: frontend
-    build: ./applicationFrontend
+    build: ./applicationFrontEnd
 
   mission:
     image: mission
