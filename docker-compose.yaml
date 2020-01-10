@@ -1,0 +1,41 @@
+---
+version: '3.7'
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+    ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+    depends_on:
+    - frontend
+    - mission
+
+  frontend:
+    image: frontend
+    container_name: frontend
+    build: ./applicationFrontend
+
+  mission:
+    image: mission
+    container_name: mission
+    build: ./applicationMission
+    depends_on:
+    - target
+    - weapon
+
+  target:
+    image: target
+    container_name: target
+    build: ./applicationTarget
+
+  weapon:
+    image: weapon
+    container_name: weapon
+    build: ./applicationWeapon
+...
