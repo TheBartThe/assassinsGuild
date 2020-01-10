@@ -1,5 +1,5 @@
 FROM python:latest
-WORKDIR /opt/ff-server
+WORKDIR /opt/ass-app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . ass-app
