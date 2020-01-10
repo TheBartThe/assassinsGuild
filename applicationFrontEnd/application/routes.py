@@ -11,7 +11,7 @@ def home():
 @app.route('/mission', methods=["GET"])
 def mission():
     form = MissionForm()
-    missionService = "http://127.0.0.1:5001/"
+    missionService = "http://mission:5001/"
     if request.method == 'GET':
         response = requests.get(missionService).json()
         return render_template('mission.html', title = 'Mission', form = form, data = response)
