@@ -10,6 +10,6 @@ def home():
 
 @app.route('/mission', methods=["GET", "POST"])
 def mission():
-    form = MissionForm
+    form = MissionForm()
     targetService = "http://127.0.0.1:5002/"
     return render_template('mission.html', title = 'Mission', form = form)
