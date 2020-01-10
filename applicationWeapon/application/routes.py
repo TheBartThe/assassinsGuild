@@ -1,5 +1,5 @@
 from application import app
-from getWeapon import selectWeapon
+from application.getWeapon import selectWeapon
 
 @app.route('/', methods=["GET"])
 def correctAnswer():

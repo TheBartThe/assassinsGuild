@@ -1,5 +1,5 @@
 from application import app
-from mission import getMission
+from application.mission import getMission
 
 @app.route('/', methods=["GET"])
 def mission():

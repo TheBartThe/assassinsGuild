@@ -1,6 +1,6 @@
 from application import app
 from flask import render_template, request
-from forms import MissionForm
+from application.forms import MissionForm
 import requests
 
 @app.route('/home')
