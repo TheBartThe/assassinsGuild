@@ -17,12 +17,12 @@ services:
     - mission
 
   frontend:
-    image: 127.0.0.1/frontend
+          image: 127.0.0.1:5000/frontend
     container_name: frontend
     build: ./applicationFrontEnd
 
   mission:
-    image: 127.0.0.1/mission
+          image: 127.0.0.1:5000/mission
     container_name: mission
     build: ./applicationMission
     depends_on:
@@ -30,12 +30,12 @@ services:
     - weapon
 
   target:
-    image: 127.0.0.1/target
+          image: 127.0.0.1:5000/target
     container_name: target
     build: ./applicationTarget
 
   weapon:
-    image: 127.0.0.1/weapon
+          image: 127.0.0.1:5000/weapon
     container_name: weapon
     build: ./applicationWeapon
 ...
