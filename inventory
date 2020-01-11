@@ -1,24 +1,24 @@
 [jenkins]
-35.246.34.137
+assassin-ansible-jenkins
 
 [docker]
-35.197.208.105
-35.246.34.137
+assassin-ansible-jenkins
+assassin-ansible-deploy
 
 [swarm-master]
-35.197.208.105
+assassin-ansible-deploy
 
 [jenkins:vars]
-ansible_user=qa-admin
-ansible_ssh_private_key_file=~/.ssh/ansible_id_rsa
+ansible_user=vieran96
+ansible_ssh_private_key_file=~/.ssh/id_rsa
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [docker:vars]
-ansible_user=qa-admin
-ansible_ssh_private_key_file=~/.ssh/ansible_id_rsa
+ansible_user=vieran96
+ansible_ssh_private_key_file=~/.ssh/id_rsa
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [swarm-master:vars]
-ansible_user=qa-admin
-ansible_ssh_private_key_file=~/.ssh/ansible_id_rsa
+ansible_user=vieran96
+ansible_ssh_private_key_file=~/.ssh/id_rsa
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'

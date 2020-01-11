@@ -179,32 +179,26 @@
       name: docker
       state: started
 
-- name: "docker swarm deploy"
+- name: "setup swarm"
   hosts: swarm-master
   become: yes
   tasks:
-    - name: "git clone"
-      git:
-        repo: "https://github.com/TheBartThe/assassinsGuild"
-        dest: /home/jenkins/assassin-app
-    - name: "init swarm"
-      docker_swarm:
-        state: present
-    - name: "build docker images"
-      docker_compose:
-        project_src: /home/jenkins/assassin-app
-        build: yes
-      remote_user: jenkins
-    - name: "deploy stack"
-      docker_stack:
-        state: present
-        name: assassin-application
-        compose:
-          - /home/jenkins/assassin-app/docker-compose.yaml
+  - name: "git clone"
+    git:
+      repo: "https://github.com/TheBartThe/assassinsGuild""https://github.com/TheBartThe/assassinsGuild"
+      dest: /home/jenkins/assassin-app
+  - name: "initialise swarm"
+    docker_swarm:
+      state: present
 
-- hosts: jenkins
+- name: "setup jenkins"
+  hosts: jenkins
   become: yes
   tasks:
+  - name: "restart jenkins"
+    service:
+      name: jenkins
+      state: restarted
   - name: "display jenkins password"
     shell: |
             echo "---Jenkins Password---"
