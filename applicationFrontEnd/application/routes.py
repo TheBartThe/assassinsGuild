@@ -12,7 +12,7 @@ def home():
 def mission():
     form = MissionForm()
     missionService = "http://mission:5001/"
-    if request.method == 'GET':
+    if form.is_submitted():
         response = requests.get(missionService).json()
         return render_template('mission.html', title = 'Mission', form = form, data = response)
 #    if request.method == 'POST':
