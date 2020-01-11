@@ -20,11 +20,15 @@ services:
     image: 10.132.0.5:5000/frontend:$build
     container_name: frontend
     build: ./applicationFrontEnd
+    deploy:
+      replicas: 3
 
   mission:
     image: 10.132.0.5:5000/mission:$build
     container_name: mission
     build: ./applicationMission
+    deploy:
+      replicas: 3
     depends_on:
     - target
     - weapon
@@ -33,9 +37,13 @@ services:
     image: 10.132.0.5:5000/target:$build
     container_name: target
     build: ./applicationTarget
+    deploy:
+      replicas: 3
 
   weapon:
     image: 10.132.0.5:5000/weapon:$build
     container_name: weapon
     build: ./applicationWeapon
+    deploy:
+      replicas: 3
 ...
