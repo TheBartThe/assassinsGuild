@@ -6,7 +6,7 @@ def getMission(targetService, weaponService):
     targetList = requests.get(targetService).json()
     weapon = weaponList["weapon"]
     target = targetList["target"]
-    points = (weaponList["weaponPoints"] * targetList["targetPoints"]) * 100000
+    points = (weaponList["weaponPoints"] * targetList["targetPoints"]) * 10
     credits = "credit" if (points == 1) else "credits"
     message = "Right, here is your mission. Your target is " + target + ". You must use a " + weapon + ". This will earn you " + str(points) + " " + credits + " with The Guild. Good luck. You have 48 hours. This message will now self destruct."
     return {"message": message}
