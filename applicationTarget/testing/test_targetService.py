@@ -2,7 +2,7 @@ import unittest
 
 from flask import url_for
 from flask_testing import TestCase
-from application import app, routes
+from application import app, routes, getTarget
 
 class TestBase(TestCase):
 
@@ -19,5 +19,5 @@ class UnitTest(TestBase):
 
     def test_targetResponse(self):
         # Test target service gives dictionary length 2 - should be target and points
-        target = routes.target().json()
+        target = getTarget.selectTarget()
         self.assertEqual(len(target), 2)

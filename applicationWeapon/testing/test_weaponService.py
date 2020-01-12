@@ -2,7 +2,7 @@ import unittest
 
 from flask import url_for
 from flask_testing import TestCase
-from application import app, routes
+from application import app, routes, getWeapon
 
 class TestBase(TestCase):
 
@@ -19,5 +19,5 @@ class UnitTest(TestBase):
 
     def test_weaponResponse(self):
         # Test weapon service gives dictionary length 2 - should be weapon and points
-        weapon = routes.correctAnswer().json()
+        weapon = getWeapon.selectWeapon()
         self.assertEqual(len(weapon), 2)

@@ -17,7 +17,7 @@ class UnitTest(TestBase):
         response = self.client.get(url_for('home'))
         self.assertEqual(response.status_code, 200)
 
-    def test_mission(self):
+#    def test_mission(self):
         # Test mission page is accessible
-        response = self.client.get(url_for('mission'))
-        self.assertEqual(response.status_code, 200)
+#        response = self.client.get(url_for('mission'))
+#        self.assertEqual(response.status_code, 200)
