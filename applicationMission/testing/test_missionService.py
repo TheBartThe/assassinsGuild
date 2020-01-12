@@ -2,7 +2,7 @@ import unittest
 
 from flask import url_for
 from flask_testing import TestCase
-from application import app
+from application import app, routes
 
 class TestBase(TestCase):
 
