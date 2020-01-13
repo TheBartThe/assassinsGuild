@@ -14,7 +14,7 @@ def mission():
     missionService = "http://mission:5001/"
     if request.method == 'GET':
         response = requests.get(missionService).json()
-        return render_template('mission.html', title = 'Mission update', form = form, data = response)
+        return render_template('mission.html', title = 'Mission', form = form, data = response)
 #    if request.method == 'POST':
 #        response = requests.get(missionService).json()
 #        return render_template('mission.html', title = 'Mission', form = form, data = response)
