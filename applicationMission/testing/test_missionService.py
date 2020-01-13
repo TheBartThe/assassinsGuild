@@ -2,7 +2,7 @@ import unittest
 
 from flask import url_for
 from flask_testing import TestCase
-from application import app, routes
+from application import app, routes, mission
 
 class TestBase(TestCase):
 
@@ -12,12 +12,9 @@ class TestBase(TestCase):
 
 class UnitTest(TestBase):
 
-    def test_mission(self):
-        # Test mission service is accessible
-        response = self.client.get(url_for('mission'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_targetResponse(self):
+    def test_missionService(self):
         # Test mission service gives dictionary length 1 - should be message
-        mission = routes.mission().json()
-        self.assertEqual(len(mission), 1)
+        targetList = {"target": "testtarget", "targetPoints": 10}
+        weaponList = {"weapon": "testweapom", "weaponPoints": 10}
+        missiontest = mission.getMission(targetList, weaponList)
+        self.assertEqual(len(missiontest), 1)

@@ -1,9 +1,13 @@
 from flask import request
 import requests
 
-def getMission(targetService, weaponService):
-    weaponList = requests.get(weaponService).json()
+def requestTarget(targetService):
     targetList = requests.get(targetService).json()
+
+def requestWeapon(weaponService):
+    weaponList = requests.get(weaponService).json()
+
+def getMission(targetList, weaponList):
     weapon = weaponList["weapon"]
     target = targetList["target"]
     points = (weaponList["weaponPoints"] * targetList["targetPoints"]) * 10000
