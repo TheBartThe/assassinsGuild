@@ -2,10 +2,10 @@ from flask import request
 import requests
 
 def requestTarget(targetService):
-    targetList = requests.get(targetService).json()
+    return requests.get(targetService).json()
 
 def requestWeapon(weaponService):
-    weaponList = requests.get(weaponService).json()
+    return requests.get(weaponService).json()
 
 def getMission(targetList, weaponList):
     weapon = weaponList["weapon"]
