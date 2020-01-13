@@ -1,0 +1,28 @@
+- name: "build images"
+  hosts: jenkins
+  become: yes
+  tasks:
+  - name: "clone repo"
+    git:
+     repo: "https://github.com/TheBartThe/assassinsGuildTest"
+     dest: /home/jenkins/assassin-app
+  - name: "build images"
+    docker_compose:
+      project_src: /home/jenkins/assassin-app
+      build: yes
+    remote_user: jenkins
+  - name: "push images"
+    shell:
+      chdir: /home/jenkins/assassin-app
+      cmd: docker-compose push
+
+- name: "docker swarm deploy"
+  hosts: swarm-master
+  become: yes
+  tasks:
+    - name: "deploy stack"
+      docker_stack:
+        state: present
+        name: assassin-application
+        compose:
+          - /home/jenkins/assassin-app/docker-compose.yaml
