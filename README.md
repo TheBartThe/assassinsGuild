@@ -1,6 +1,6 @@
 # Assassins' Guild
 ## Presentation
-![Presentation](https://github.com/TheBartThe/assassinsGuild/blob/master/Documentation/assassinsGuildPresentation.pptx)
+![Presentation](https://github.com/TheBartThe/assassinsGuild/blob/master/Documentation/assassinsGuildPresentationCopy.pptx)
 
 ## Running this application
 To run this application yourself:
