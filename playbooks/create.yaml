@@ -1,0 +1,124 @@
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: "generate key pair"
+    openssh_keypair:
+      path: ~/.ssh/ansible_id_rsa
+      state: present
+  - name: "create key pair using key_material obtained using 'file' lookup plugin"
+    ec2_key:
+      name: CloudFormationKeyPair
+      key_material: "{{ lookup('file', '~/.ssh/ansible_id_rsa.pub') }}"
+      state: present
+  - name: "create a simple stack"
+    cloudformation:
+      state: present
+      stack_name: test-stack
+      region: eu-west-2
+      template: stack.yaml
+  - cloudformation_info:
+      stack_name: test-stack
+      stack_resources: yes
+    register: output
+  - ec2_instance_info:
+      instance_ids: "{{ output['cloudformation']['test-stack']['stack_resource_list'] | json_query(query) }}"
+    vars:
+      query: "[?ResourceType=='AWS::EC2::Instance'].PhysicalResourceId"
+    register: ec2
+  - set_fact:
+      ec2_instances: "{{ ec2['instances'] | map(attribute='public_dns_name') | list }}"
+  - name: "build inventory"
+    add_host:
+      name: "{{ item }}"
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/ansible_id_rsa
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ConnectTimeout=60'
+    with_items: "{{ ec2_instances }}"
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: "Wait for system to become reachable"
+    wait_for_connection:
+  - name: "Gather facts for first time"
+    setup:
+  - name: "Install Dependencies"
+    apt:
+      name:
+      - git
+      state: latest
+      update_cache: yes
+  - name: "prerequisites"
+    apt:
+      pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+      state: latest
+      update_cache: yes
+  - name: "docker gpg key"
+    apt_key:
+      url: "https://download.docker.com/linux/debian/gpg"
+      state: present
+  - name: "docker apt repo"
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable"
+      state: present
+  - name: "install docker"
+    apt:
+      pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      state: latest
+      update_cache: yes
+  - name: "docker service start"
+    service:
+      name: docker
+      state: started
+  - name: "ubuntu user"
+    user:
+      name: ubuntu
+      shell: /bin/bash
+      groups: docker
+      append: yes
+  - name: "reload docker"
+    service:
+      name: docker
+      state: reloaded
+  - name: prerequisites
+    apt:
+      pkg:
+      - python3-pip
+      - python-pip
+      - git
+      state: latest
+      update_cache: yes
+  - name: "docker"
+    pip:
+      name: docker
+  - name: "json"
+    pip:
+      name: jsondiff
+  - name: "yaml"
+    pip:
+      name: pyyaml
+  - name: "install docker compose"
+    pip:
+      name: docker-compose
+  - name: "docker service"
+    service:
+      name: docker
+      state: started
+  - name: "git clone"
+    git:
+      repo: "https://github.com/TheBartThe/assassinsGuild"
+      dest: /home/ubuntu/assassin-app
+      force: no
+  - name: "start application"
+    environment:
+      build: "0"
+    docker_compose:
+      project_src: /home/ubuntu/assassin-app/
