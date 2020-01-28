@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assassin-app-frontend
+  labels: 
+    app: assassin-app-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: assassin-app-frontend
+  template:
+    metadata:
+      labels:
+        app: assassin-app-frontend
+    spec:
+      containers:
+      - name: assassin-app-frontend
+        image: thebartthe/frontend
+        ports:
+        - containerPort: 5000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assassin-app-mission
+  labels: 
+    app: assassin-app-mission
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: assassin-app-mission
+  template:
+    metadata:
+      labels:
+        app: assassin-app-mission
+    spec:
+      containers:
+      - name: assassin-app-mission
+        image: thebartthe/mission
+        ports:
+        - containerPort: 5001
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assassin-app-target
+  labels: 
+    app: assassin-app-target
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: assassin-app-target
+  template:
+    metadata:
+      labels:
+        app: assassin-app-target
+    spec:
+      containers:
+      - name: assassin-app-target
+        image: thebartthe/target
+        ports:
+        - containerPort: 5002
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assassin-app-weapon
+  labels: 
+    app: assassin-app-weapon
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: assassin-app-weapon
+  template:
+    metadata:
+      labels:
+        app: assassin-app-weapon
+    spec:
+      containers:
+      - name: assassin-app-weapon
+        image: thebartthe/weapon
+        ports:
+        - containerPort: 5003
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+spec:
+  selector:
+    app: assassin-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer
+
